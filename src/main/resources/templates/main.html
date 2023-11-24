@@ -20,10 +20,10 @@
         <th>Captain</th>
         <th>First Officer</th>
         <th>Mechanic</th>
+        <th>Details</th>
     </tr>
     </thead>
     <tbody>
-    <!-- Use Thymeleaf loop to iterate through the list of FlyScheduleResDto objects -->
     <tr th:each="flySchedule : ${memberSchedules}">
         <td th:text="*{flySchedule.startAirport}"></td>
         <td th:text="${flySchedule.startTime}"></td>
@@ -33,6 +33,9 @@
         <td th:text="${flySchedule.captain}"></td>
         <td th:text="${flySchedule.firstOfficer}"></td>
         <td th:text="${flySchedule.mechanic}"></td>
+        <td>
+            <a th:href="@{'/details/' + ${flySchedule.schedule}}">보기</a>
+        </td>
     </tr>
     </tbody>
 </table>

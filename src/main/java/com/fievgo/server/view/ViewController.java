@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -53,21 +54,28 @@ public class ViewController {
     }
 
     @PostMapping("/conditionInput")
-    public String postConditionInputPage(@ModelAttribute ConditionReqDto model,
+    public String postConditionInputPage(@ModelAttribute("model") ConditionReqDto conditionReqDto,
                                          RedirectAttributes redirectAttributes) {
         log.info("컨디션 입력");
-        ontologyService.inputMemberCondition(model);
-        redirectAttributes.addAttribute("conditionReqDto", model.toString());
+        ontologyService.inputMemberCondition(conditionReqDto);
+        redirectAttributes.addFlashAttribute("conditionReqDto", conditionReqDto);
         return "redirect:main";
     }
 
     @GetMapping("/main")
-    public String getMainPage(Model model, @ModelAttribute ConditionReqDto conditionReqDto) {
+    public String getMainPage(Model model, @ModelAttribute("conditionReqDto") ConditionReqDto conditionReqDto) {
         log.info("메인 페이");
         Long memberId = conditionReqDto.getMemberId();
         List<FlyScheduleResDto> memberSchedules = ontologyService.getMemberSchedule(memberId);
         model.addAttribute("memberSchedules", memberSchedules);
         return "main";
+    }
+
+    @GetMapping("/details/{schedule}")
+    public String getFlyScheduleDetailPage(Model model, @PathVariable("schedule") String schedule) {
+        log.info("디테일 페이지");
+        //TODO : 데테이페이지 구현
+        return "details";
     }
 
 }

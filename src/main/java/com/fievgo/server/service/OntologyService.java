@@ -43,7 +43,5 @@ public class OntologyService {
         return ontologyRepository.getMemberSchedule(memberId);
     }
 
-    // TODO: 비즈니스 로직 구현.
-
 
 }

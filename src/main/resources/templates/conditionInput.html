@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <title>Condition Input Page</title>
     <style>
         body {
             display: flex;
@@ -13,24 +13,24 @@
             margin: 0;
         }
 
-        #login-container {
+        #condition-container {
             text-align: center;
             border: 1px solid #ccc;
             padding: 20px;
             width: 300px;
         }
 
-        #login-container h2 {
+        #condition-container h2 {
             font-size: 24px;
             margin-bottom: 20px;
         }
 
-        #login-form {
+        #condition-form {
             display: flex;
             flex-direction: column;
         }
 
-        #login-form input {
+        #condition-form input {
             margin-bottom: 10px;
             padding: 10px;
         }
@@ -45,10 +45,10 @@
     </style>
 </head>
 <body>
-<div id="login-container">
+<div id="condition-container">
     <h2>Five-Go</h2>
     <p>현재 컨디션을 입력해주세요.</p>
-    <form id="login-form" th:action th:object="${conditionReqDto}" method="post">
+    <form id="condition-form" th:action th:object="${conditionReqDto}" method="post">
         <input type="hidden" th:field="*{memberId}" th:value="*{memberId}"/>
         <input type="text" id="condition" th:field="*{condition}" placeholder="컨디션">
         <button type="submit" id="condition-button">제출</button>
