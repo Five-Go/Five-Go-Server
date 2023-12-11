@@ -21,7 +21,7 @@
         }
 
         #login-container h2 {
-            font-size: 24px;
+            font-size: 29px;
             margin-bottom: 20px;
         }
 
@@ -41,15 +41,24 @@
             color: white;
             border: none;
             cursor: pointer;
+            font-size: 20px;
+            margin-top: 17px;
+        }
+
+        .input-field {
+            font-size: 18px; /* 원하는 크기로 조정해주세요 */
         }
     </style>
 </head>
 <body>
 <div id="login-container">
+    <div class="logo-container">
+        <img src="img/4741593.png" alt="logo" width="100" height="100">
+    </div>
     <h2>Five-Go</h2>
     <form id="login-form" th:action="@{/login}" th:object="${loginReqDto}" method="post">
-        <input type="text" id="email" th:field="*{email}" placeholder="이메일">
-        <input type="password" id="password" th:field="*{password}" placeholder="비밀번호">
+        <input type="text" id="email" th:field="*{email}" placeholder="이메일" class="input-field">
+        <input type="password" id="password" th:field="*{password}" placeholder="비밀번호" class="input-field">
         <button type="submit" id="login-button">로그인</button>
     </form>
 </div>
