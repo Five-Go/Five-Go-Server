@@ -14,6 +14,25 @@ import org.springframework.stereotype.Component;
 public class StringMapper {
     private static final String ONTOLOGY_IRI = "http://www.semanticweb.org/fivego#";
 
+    public static List<String> getResultsBindings(String queryResBody) {
+        List<String> result = new ArrayList<>();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            JsonNode jsonNode = objectMapper.readTree(queryResBody);
+
+            JsonNode resultsNode = jsonNode.path("results");
+            JsonNode bindingsNode = resultsNode.path("bindings");
+
+            for (JsonNode bindingNode : bindingsNode) {
+                result.add(bindingNode.toString());
+            }
+            return result;
+        } catch (Exception e) {
+            throw new IllegalArgumentException(JSON_NODE_CONVERT_ERROR.getMessage());
+        }
+    }
+
     public static List<FlyScheduleResDto> convertToFlyScheduleResDtos(String body) {
         List<FlyScheduleResDto> result = new ArrayList<>();
         List<String> titles = getTitleFromJsonNode(body);

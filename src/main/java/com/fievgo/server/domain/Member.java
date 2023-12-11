@@ -33,5 +33,9 @@ public class Member {
     private String password;
 
     @Size(max = 255)
-    private String name;
+    private String nameKr;
+
+    @Size(max = 255)
+    private String nameEn;
+
 }

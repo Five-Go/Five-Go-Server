@@ -50,7 +50,7 @@ public class ViewController {
         conditionReqDto.setMemberId(memberId);
         model.addAttribute("conditionReqDto", conditionReqDto);
 
-        return "conditionInput";
+        return "conditionInput_button_version";
     }
 
     @PostMapping("/conditionInput")
