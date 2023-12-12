@@ -65,9 +65,13 @@ public class ViewController {
     }
 
     @GetMapping("/main")
-    public String getMainPage(Model model, @ModelAttribute("conditionReqDto") ConditionReqDto conditionReqDto) {
+    public String getMainPage(Model model, @ModelAttribute("conditionReqDto") ConditionReqDto conditionReqDto,
+                              @ModelAttribute("member") Long id) {
         log.info("메인 페이");
-        Long memberId = conditionReqDto.getMemberId();
+        Long memberId = id;
+        if (conditionReqDto.getMemberId() != null) {
+            memberId = conditionReqDto.getMemberId();
+        }
         List<FlyScheduleResDto> memberSchedules = ontologyService.getMemberSchedule(memberId);
         model.addAttribute("memberSchedules", memberSchedules);
         return "main";
@@ -77,7 +81,7 @@ public class ViewController {
     public String getFlyScheduleDetailPage(Model model, @PathVariable("schedule") String schedule) {
         log.info("디테일 페이지");
         //TODO : 데테이페이지 구현
-        return "details";
+        return "상세일정페이지";
     }
 
 }

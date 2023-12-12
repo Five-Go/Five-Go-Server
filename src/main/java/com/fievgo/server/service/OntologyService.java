@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 public class OntologyService {
     private final OntologyRepository ontologyRepository;
     private final MemberRepository memberRepository;
+    private final MemberService memberService;
 
     public Long getMemberId(LoginReqDto model) {
         log.info("Member email : {}, Member pwd : {}", model.getEmail(), model.getPassword());
@@ -40,7 +41,8 @@ public class OntologyService {
     }
 
     public List<FlyScheduleResDto> getMemberSchedule(Long memberId) {
-        return ontologyRepository.getMemberSchedule(memberId);
+        List<FlyScheduleResDto> memberSchedules = ontologyRepository.getMemberSchedule(memberId);
+        return memberService.convertMemberName(memberSchedules);
     }
 
 
