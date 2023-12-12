@@ -2,6 +2,7 @@ package com.fievgo.server.repository;
 
 import com.fievgo.server.dto.ConditionReqDto;
 import com.fievgo.server.dto.FlyScheduleResDto;
+import com.fievgo.server.dto.UpdatePersonConditionDto;
 import com.fievgo.server.utils.OntologyConnection;
 import com.fievgo.server.utils.StringMapper;
 import java.util.List;
@@ -32,7 +33,7 @@ public class OntologyRepository {
                 )
                 }
                 """;
-        ResponseEntity<String> stringResponseEntity = OntologyConnection.sendOntologyQuery(
+        ResponseEntity<String> stringResponseEntity = OntologyConnection.sendOntologySelectQuery(
                 prefixQuery + memberId + suffixQuery);
         String body = stringResponseEntity.getBody();
 
@@ -46,7 +47,10 @@ public class OntologyRepository {
     }
 
     public void inputMemberCondition(ConditionReqDto conditionReqDto) {
-        //TODO: 온톨로지에 해당 멤버의 컨디션을 업데이트 합니다.
+        OntologyConnection.sendOntologyUpdateCondition(
+                UpdatePersonConditionDto.of(conditionReqDto.getMemberId(),
+                        conditionReqDto.getCondition())
+        );
     }
 
     public List<FlyScheduleResDto> getMemberSchedule(Long memberId) {

@@ -57,6 +57,8 @@ public class ViewController {
     public String postConditionInputPage(@ModelAttribute("model") ConditionReqDto conditionReqDto,
                                          RedirectAttributes redirectAttributes) {
         log.info("컨디션 입력");
+        log.info("Condition: {}", conditionReqDto.getCondition());
+        log.info("id: {}", conditionReqDto.getMemberId());
         ontologyService.inputMemberCondition(conditionReqDto);
         redirectAttributes.addFlashAttribute("conditionReqDto", conditionReqDto);
         return "redirect:main";
