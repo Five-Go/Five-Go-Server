@@ -1,6 +1,6 @@
 package com.fievgo.server.utils;
 
-import static com.fievgo.server.common.ErrorMessage.JSON_NODE_CONVERT_ERROR;
+import static com.fievgo.server.utils.ErrorMessage.JSON_NODE_CONVERT_ERROR;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

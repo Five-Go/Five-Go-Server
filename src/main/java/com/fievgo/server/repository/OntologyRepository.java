@@ -1,6 +1,6 @@
 package com.fievgo.server.repository;
 
-import static com.fievgo.server.common.ErrorMessage.QUERY_RESULT_EMPTY;
+import static com.fievgo.server.utils.ErrorMessage.QUERY_RESULT_EMPTY;
 
 import com.fievgo.server.dto.ConditionReqDto;
 import com.fievgo.server.dto.FlyScheduleResDto;

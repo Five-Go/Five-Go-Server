@@ -1,6 +1,6 @@
 package com.fievgo.server.utils;
 
-import static com.fievgo.server.common.ErrorMessage.GRAPHDB_ERROR;
+import static com.fievgo.server.utils.ErrorMessage.GRAPHDB_ERROR;
 
 import com.fievgo.server.dto.UpdatePersonConditionDto;
 import lombok.extern.slf4j.Slf4j;
