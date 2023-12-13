@@ -24,7 +24,7 @@ public class FlyScheduleResDto {
 
     public static FlyScheduleResDto of(HashMap<String, String> data) {
         return FlyScheduleResDto.builder()
-                .schedule(data.get("Schedule"))
+                .schedule(data.get("Schedule").split("Schedule")[1])
                 .startAirport(data.get("StartAirport"))
                 .startTime(data.get("StartTime"))
                 .endAirport(data.get("EndAirport"))

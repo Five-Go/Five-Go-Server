@@ -23,15 +23,12 @@ public class ViewController {
 
     @GetMapping("/login")
     public String getLoginPage(Model model) {
-        log.info("get Login Page");
         model.addAttribute("loginReqDto", new LoginReqDto());
         return "login";
     }
 
     @GetMapping("/conditionInput")
     public String getConditionInputPage(Model model, @Login Member member) {
-        log.info("컨디션 입력 페이지");
-        log.info("MemberId : {} ", member.getId());
         ConditionReqDto conditionReqDto = new ConditionReqDto();
         conditionReqDto.setMemberId(member.getId());
         model.addAttribute("conditionReqDto", conditionReqDto);
@@ -42,7 +39,6 @@ public class ViewController {
     @GetMapping("/main")
     public String getMainPage(Model model, @ModelAttribute("conditionReqDto") ConditionReqDto conditionReqDto,
                               @Login Member member) {
-        log.info("메인 페이");
         Long memberId = member.getId();
         List<FlyScheduleResDto> memberSchedules = ontologyService.getMemberSchedule(memberId);
         model.addAttribute("memberSchedules", memberSchedules);
