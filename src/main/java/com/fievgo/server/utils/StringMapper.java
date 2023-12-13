@@ -5,6 +5,7 @@ import static com.fievgo.server.utils.ErrorMessage.JSON_NODE_CONVERT_ERROR;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fievgo.server.dto.FlyScheduleResDto;
+import com.fievgo.server.dto.ScheduleConditionDto;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -80,6 +81,27 @@ public class StringMapper {
 
             }
             return result;
+        } catch (Exception e) {
+            throw new IllegalArgumentException(JSON_NODE_CONVERT_ERROR.getMessage());
+        }
+    }
+
+    public static ScheduleConditionDto convertToScheduleConditionDto(String body) {
+        List<ScheduleConditionDto> result = new ArrayList<>();
+        List<String> titles = getTitleFromJsonNode(body);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            JsonNode jsonNode = objectMapper.readTree(body);
+
+            JsonNode resultsNode = jsonNode.path("results");
+            JsonNode bindingsNode = resultsNode.path("bindings");
+
+            for (JsonNode bindingNode : bindingsNode) {
+                HashMap<String, String> schedules = getScheduleData(titles, bindingNode);
+                result.add(ScheduleConditionDto.of(schedules));
+            }
+            return result.get(0);
         } catch (Exception e) {
             throw new IllegalArgumentException(JSON_NODE_CONVERT_ERROR.getMessage());
         }

@@ -40,6 +40,13 @@ public class MemberService {
                 }).toList();
     }
 
+    public FlyScheduleResDto convertMemberName(FlyScheduleResDto schedule) {
+        schedule.changeCaptainName(getMemberNameByDB(schedule.getCaptain()));
+        schedule.changeFirstOfficerName(getMemberNameByDB(schedule.getFirstOfficer()));
+        schedule.changeMechanicName(getMemberNameByDB(schedule.getMechanic()));
+        return schedule;
+    }
+
     private String getMemberNameByDB(String memberName) {
         Long memberId = Long.parseLong(memberName.split("n")[1]);
         Member member = memberRepository.findById(memberId)

@@ -40,7 +40,7 @@ public class ViewController {
     public String getMainPage(Model model, @ModelAttribute("conditionReqDto") ConditionReqDto conditionReqDto,
                               @Login Member member) {
         Long memberId = member.getId();
-        List<FlyScheduleResDto> memberSchedules = ontologyService.getMemberSchedule(memberId);
+        List<FlyScheduleResDto> memberSchedules = ontologyService.getMemberSchedules(memberId);
         model.addAttribute("memberSchedules", memberSchedules);
         return "main";
     }
@@ -48,8 +48,10 @@ public class ViewController {
     @GetMapping("/details/{schedule}")
     public String getFlyScheduleDetailPage(Model model, @PathVariable("schedule") String schedule,
                                            @Login Member loginMember) {
-        log.info("디테일 페이지");
-        //TODO : 데테이페이지 구현
+        FlyScheduleResDto scheduleDto = ontologyService.getSchedule(schedule);
+        model.addAttribute("schedule", scheduleDto);
+        model.addAttribute("condition", ontologyService.getConditionBySchedule(scheduleDto.getSchedule()));
+        model.addAttribute("member", loginMember);
         return "상세일정페이지";
     }
 
