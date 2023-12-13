@@ -1,4 +1,4 @@
-package com.fievgo.server.common;
+package com.fievgo.server.utils;
 
 public enum ErrorMessage {
     GRAPHDB_ERROR("GraphDB 에러입니다."),

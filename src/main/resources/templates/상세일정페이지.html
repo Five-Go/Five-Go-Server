@@ -1,6 +1,5 @@
-
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>FIVE GO</title>
@@ -10,7 +9,7 @@
             border: 1px solid #444444;
             text-align: center;
             margin: 20px auto 0;
-            border-collapse : collapse;
+            border-collapse: collapse;
         }
 
         th, td {
@@ -59,7 +58,7 @@
 
         .box {
             border: 1.5px solid #444444;
-            line-height:30px;
+            line-height: 30px;
             padding: 20px;
             font-size: 18px;
             width: 40%; /* 더 큰 가로 사이즈를 위한 값 */
@@ -71,7 +70,7 @@
 
         .box2 {
             border: 1.5px solid #444444;
-            line-height:30px;
+            line-height: 30px;
             padding: 20px;
             font-size: 18px;
             width: 40%; /* 더 큰 가로 사이즈를 위한 값 */
@@ -83,7 +82,7 @@
 
         .time {
             font-size: 19px; /* 글자 크기 변경 */
-            color: 	#808080; /* 글자 색상 변경 */
+            color: #808080; /* 글자 색상 변경 */
         }
 
         .loading-spinner-container {
@@ -116,8 +115,12 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         .loading-spinner-container {
@@ -132,45 +135,60 @@
     <div class="logo-container">
         <img src="img/4741593.png" alt="logo" width="100" height="100">
     </div>
-    <h1>FIVE GO   |    울산-김포행 비행 상세     </h1>
-
+    <h1>
+        <span>FIVE GO | </span>
+        <span th:text="${schedule.startAirport}"></span>
+        <span>-</span>
+        <span th:text="${schedule.endAirport}"></span>
+        <span> 비행 상세</span>
+    </h1>
     <div class="additional-text">
-        김준기님
+        <span th:text="${member.nameKr}"></span>
+        <span>님</span>
     </div>
 </div>
 
-    <div class="box-container">
+<div class="box-container">
 
-        <div class="box">
-           출발공항 날씨 &nbsp;&nbsp; &nbsp; &nbsp; 🌨
-            <br>
-            <span class="time">기준 시간 10:40</span>
+    <div class="box">
+        <span th:text="${schedule.startAirport}"></span>
+        <span>날씨 🌨</span>
+        <br>
+        <span class="time">기준 시간 10:40</span>
 
-            <br>
-            <br>
-            도착공항 날씨 &nbsp; &nbsp; &nbsp; 🌨
-            <br>
-            <span class="time">기준 시간 12:40</span>
-
-
-
-        </div>
-        <div class="box2">
-            김준기 기장의 컨디션 &nbsp;&nbsp;  |&nbsp;&nbsp; 3
-            <br>
-            <br>
-            김규리 부기장의 컨디션 &nbsp;&nbsp; |&nbsp;&nbsp; 3
-            <br>
-            <br>
-            김보인 정비사의 컨디션 &nbsp;&nbsp;  |&nbsp;&nbsp; 미입력
-        </div>
-        </div>
+        <br>
+        <br>
+        <span th:text="${schedule.endAirport}"></span>
+        <span>날씨 🌨</span>
+        <br>
+        <span class="time">기준 시간 12:40</span>
 
 
+    </div>
+    <div class="box2">
+        <span th:text="${schedule.captain}"></span>
+        <span> 기장의 컨디션 | </span>
+        <span th:text="${condition.captainCondition}"></span>
+        <br>
+        <br>
+        <span th:text="${schedule.firstOfficer}"></span>
+        <span> 부기장의 컨디션 | </span>
+        <span th:text="${condition.firstOfficerCondition}"></span>
+        <br>
+        <br>
+        <span th:text="${schedule.mechanic}"></span>
+        <span> 정비사의 컨디션 | </span>
+        <span th:text="${condition.mechanicCondition}"></span>
+    </div>
+</div>
 
-        <div class="box-container">
-            <button onclick="showLoadingSpinner()" style="padding: 10px 20px; font-size: 25px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;"> 위험 요소 추론 </button>
-        </div>
+
+<div class="box-container">
+    <button onclick="showLoadingSpinner()"
+            style="padding: 10px 20px; font-size: 25px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">
+        위험 요소 추론
+    </button>
+</div>
 
 <div class="loading-spinner-container" id="loadingSpinner">
     <div class="spinner"></div>
@@ -190,7 +208,6 @@
         loadingSpinner.style.visibility = 'hidden';
     }
 </script>
-
 
 
 </body>

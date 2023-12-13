@@ -1,10 +1,8 @@
 package com.fievgo.server.service;
 
-import com.fievgo.server.domain.Member;
 import com.fievgo.server.dto.ConditionReqDto;
 import com.fievgo.server.dto.FlyScheduleResDto;
-import com.fievgo.server.dto.LoginReqDto;
-import com.fievgo.server.repository.MemberRepository;
+import com.fievgo.server.dto.ScheduleConditionDto;
 import com.fievgo.server.repository.OntologyRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -16,21 +14,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class OntologyService {
     private final OntologyRepository ontologyRepository;
-    private final MemberRepository memberRepository;
     private final MemberService memberService;
-
-    public Long getMemberId(LoginReqDto model) {
-        log.info("Member email : {}, Member pwd : {}", model.getEmail(), model.getPassword());
-        Member byEmail = memberRepository.findByEmail(model.getEmail())
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않은 이메일입니다."));
-
-        log.info("Search ->  Member email : {}, Member pwd : {}", byEmail.getEmail(), byEmail.getPassword());
-        if (!(byEmail.getPassword().equals(model.getPassword()))) {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
-        }
-
-        return byEmail.getId();
-    }
 
     public boolean hasCondition(Long memberId) {
         return ontologyRepository.checkHasCondition(memberId);
@@ -40,10 +24,18 @@ public class OntologyService {
         ontologyRepository.inputMemberCondition(conditionReqDto);
     }
 
-    public List<FlyScheduleResDto> getMemberSchedule(Long memberId) {
-        List<FlyScheduleResDto> memberSchedules = ontologyRepository.getMemberSchedule(memberId);
+    public List<FlyScheduleResDto> getMemberSchedules(Long memberId) {
+        List<FlyScheduleResDto> memberSchedules = ontologyRepository.getMemberSchedules(memberId);
         return memberService.convertMemberName(memberSchedules);
     }
 
+    public FlyScheduleResDto getSchedule(String scheduleId) {
+        FlyScheduleResDto schedule = ontologyRepository.getSchedule(scheduleId);
+        return memberService.convertMemberName(schedule);
+    }
 
+
+    public ScheduleConditionDto getConditionBySchedule(String scheduleId) {
+        return ontologyRepository.getConditionBySchedule(scheduleId);
+    }
 }
