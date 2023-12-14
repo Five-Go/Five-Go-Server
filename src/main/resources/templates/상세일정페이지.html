@@ -152,16 +152,20 @@
 
     <div class="box">
         <span th:text="${schedule.startAirport}"></span>
-        <span>날씨 🌨</span>
+        <span>날씨 | </span>
+        <span th:text="${startAPWeather.totalWeather}"></span>
         <br>
-        <span class="time">기준 시간 10:40</span>
+        <span class="time">기준 시간 | </span>
+        <span th:text="${startAPWeather.baseTime}"></span>
 
         <br>
         <br>
         <span th:text="${schedule.endAirport}"></span>
-        <span>날씨 🌨</span>
+        <span>날씨 | </span>
+        <span th:text="${endAPWeather.totalWeather}"></span>
         <br>
-        <span class="time">기준 시간 12:40</span>
+        <span class="time">기준 시간 | </span>
+        <span th:text="${startAPWeather.baseTime}"></span>
 
 
     </div>

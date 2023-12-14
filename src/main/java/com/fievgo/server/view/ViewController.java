@@ -5,7 +5,9 @@ import com.fievgo.server.domain.Member;
 import com.fievgo.server.dto.ConditionReqDto;
 import com.fievgo.server.dto.FlyScheduleResDto;
 import com.fievgo.server.dto.LoginReqDto;
+import com.fievgo.server.dto.WeatherConditionDto;
 import com.fievgo.server.service.OntologyService;
+import com.fievgo.server.service.WeatherService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @RequiredArgsConstructor
 public class ViewController {
     private final OntologyService ontologyService;
+    private final WeatherService weatherService;
 
     @GetMapping("/login")
     public String getLoginPage(Model model) {
@@ -49,9 +52,13 @@ public class ViewController {
     public String getFlyScheduleDetailPage(Model model, @PathVariable("schedule") String schedule,
                                            @Login Member loginMember) {
         FlyScheduleResDto scheduleDto = ontologyService.getSchedule(schedule);
+        WeatherConditionDto startAPWeather = weatherService.getAirPortWeather(scheduleDto.getStartAirport());
+        WeatherConditionDto endAPWeather = weatherService.getAirPortWeather(scheduleDto.getEndAirport());
         model.addAttribute("schedule", scheduleDto);
         model.addAttribute("condition", ontologyService.getConditionBySchedule(scheduleDto.getSchedule()));
         model.addAttribute("member", loginMember);
+        model.addAttribute("startAPWeather", startAPWeather);
+        model.addAttribute("endAPWeather", endAPWeather);
         return "상세일정페이지";
     }
 

@@ -28,7 +28,7 @@ public class LoginController {
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
 
         boolean hasCondition = ontologyService.hasCondition(loginMember.getId());
-
+        log.info("hasCondition {}", hasCondition);
         if (hasCondition) {
             return "redirect:main";
         } else {
