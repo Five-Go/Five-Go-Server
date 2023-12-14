@@ -4,10 +4,13 @@ import static com.fievgo.server.utils.ErrorMessage.JSON_NODE_CONVERT_ERROR;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fievgo.server.dto.AirPortNxNyDto;
 import com.fievgo.server.dto.FlyScheduleResDto;
 import com.fievgo.server.dto.ScheduleConditionDto;
+import com.fievgo.server.dto.WeatherConditionDto;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import org.springframework.stereotype.Component;
 
@@ -102,6 +105,56 @@ public class StringMapper {
                 result.add(ScheduleConditionDto.of(schedules));
             }
             return result.get(0);
+        } catch (Exception e) {
+            throw new IllegalArgumentException(JSON_NODE_CONVERT_ERROR.getMessage());
+        }
+    }
+
+    public static AirPortNxNyDto convertToAirPortNxNyDto(String body) {
+        List<AirPortNxNyDto> result = new ArrayList<>();
+        List<String> titles = getTitleFromJsonNode(body);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            JsonNode jsonNode = objectMapper.readTree(body);
+
+            JsonNode resultsNode = jsonNode.path("results");
+            JsonNode bindingsNode = resultsNode.path("bindings");
+
+            for (JsonNode bindingNode : bindingsNode) {
+                HashMap<String, String> nxny = getScheduleData(titles, bindingNode);
+                result.add(AirPortNxNyDto.of(nxny));
+            }
+            return result.get(0);
+        } catch (Exception e) {
+            throw new IllegalArgumentException(JSON_NODE_CONVERT_ERROR.getMessage());
+        }
+    }
+
+    public static WeatherConditionDto convertToWeatherDto(String body) {
+        HashMap<String, String> weather = new HashMap<>();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            JsonNode rootNode = objectMapper.readTree(body);
+            JsonNode itemsNode = rootNode
+                    .path("response")
+                    .path("body")
+                    .path("items")
+                    .path("item");
+
+            Iterator<JsonNode> itemsIterator = itemsNode.elements();
+            while (itemsIterator.hasNext()) {
+                JsonNode item = itemsIterator.next();
+                String category = item.path("category").asText();
+                Double obsrValue = Double.parseDouble(item.path("obsrValue").asText());
+                weather.put(category, String.valueOf(Integer.parseInt(String.valueOf(Math.round(obsrValue)))));
+            }
+            weather.put("baseTime", itemsNode.get(0).path("baseTime").asText());
+
+            WeatherConditionDto of = WeatherConditionDto.of(weather);
+            of.setTotalWeather();
+            return of;
         } catch (Exception e) {
             throw new IllegalArgumentException(JSON_NODE_CONVERT_ERROR.getMessage());
         }

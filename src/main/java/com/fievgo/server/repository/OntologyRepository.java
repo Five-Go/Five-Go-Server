@@ -2,6 +2,7 @@ package com.fievgo.server.repository;
 
 import static com.fievgo.server.utils.ErrorMessage.QUERY_RESULT_EMPTY;
 
+import com.fievgo.server.dto.AirPortNxNyDto;
 import com.fievgo.server.dto.ConditionReqDto;
 import com.fievgo.server.dto.FlyScheduleResDto;
 import com.fievgo.server.dto.ScheduleConditionDto;
@@ -33,7 +34,7 @@ public class OntologyRepository {
                     ?member five:Id ?id.
                     Filter(?id =""";
         String suffixQuery = """
-                )
+                 && ?condition > -1)
                 }
                 """;
         ResponseEntity<String> stringResponseEntity = OntologyConnection.sendOntologySelectQuery(
@@ -100,7 +101,7 @@ public class OntologyRepository {
                 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
                 PREFIX five: <http://www.semanticweb.org/fivego#>
                                 
-                select ?Schedule ?StartAirport ?StartTime ?EndAirport ?EndTime ?Aircraft ?AircraftType ?Captain ?FirstOfficer ?Mechanic ?details
+                select DISTINCT ?Schedule ?StartAirport ?StartTime ?EndAirport ?EndTime ?Aircraft ?AircraftType ?Captain ?FirstOfficer ?Mechanic ?details
                 where{
                     ?Schedule rdf:type five:비행일정.
                     ?Schedule five:has_weight ?person.
@@ -160,5 +161,28 @@ public class OntologyRepository {
             throw new IllegalArgumentException(QUERY_RESULT_EMPTY.getMessage());
         }
         return StringMapper.convertToScheduleConditionDto(queryResult);
+    }
+
+    public AirPortNxNyDto getAirPortNxAndNyByName(String airPortName) {
+        String prefixQuery = """
+                PREFIX owl: <http://www.w3.org/2002/07/owl#>
+                PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+                PREFIX five: <http://www.semanticweb.org/fivego#>
+                                
+                select ?nx ?ny
+                where{
+                    ?airport rdf:type five:공항.
+                   	?airport five:nx ?nx.
+                    ?airport five:ny ?ny.
+                    Filter(?airport=five:""";
+        String suffixQuery = ")}";
+
+        String queryResult = OntologyConnection.sendOntologySelectQuery(prefixQuery + airPortName + suffixQuery)
+                .getBody();
+        if (queryResult == null) {
+            throw new IllegalArgumentException(QUERY_RESULT_EMPTY.getMessage());
+        }
+        return StringMapper.convertToAirPortNxNyDto(queryResult);
     }
 }

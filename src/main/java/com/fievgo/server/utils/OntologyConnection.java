@@ -33,6 +33,7 @@ public class OntologyConnection {
                     String.class
             );
         } catch (Exception e) {
+            log.error(e.getMessage());
             throw new IllegalArgumentException(GRAPHDB_ERROR.getMessage());
         }
     }
