@@ -4,6 +4,7 @@ import static com.fievgo.server.utils.ErrorMessage.QUERY_RESULT_EMPTY;
 
 import com.fievgo.server.dto.AirPortNxNyDto;
 import com.fievgo.server.dto.ConditionReqDto;
+import com.fievgo.server.dto.FactorAndCondtionDto;
 import com.fievgo.server.dto.FlyScheduleResDto;
 import com.fievgo.server.dto.ScheduleConditionDto;
 import com.fievgo.server.dto.UpdatePersonConditionDto;
@@ -184,5 +185,59 @@ public class OntologyRepository {
             throw new IllegalArgumentException(QUERY_RESULT_EMPTY.getMessage());
         }
         return StringMapper.convertToAirPortNxNyDto(queryResult);
+    }
+
+    public List<String> getAllFactorBySchedule(String scheduleId) {
+        String prefixQuery = """
+                PREFIX owl: <http://www.w3.org/2002/07/owl#>
+                PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+                PREFIX five: <http://www.semanticweb.org/fivego#>
+                                
+                select ?factor
+                where{
+                    ?schedule rdf:type five:비행일정.
+                    ?schedule five:Id ?id.
+                    ?schedule five:has_weight ?factor.
+                    ?factor rdf:type five:요인.
+                    Filter(?id = """;
+        String suffixQuery = ")}";
+
+        String queryResult = OntologyConnection.sendOntologySelectQuery(prefixQuery + scheduleId + suffixQuery)
+                .getBody();
+        if (queryResult == null) {
+            throw new IllegalArgumentException(QUERY_RESULT_EMPTY.getMessage());
+        }
+        return StringMapper.convertFacts(queryResult);
+    }
+
+    public FactorAndCondtionDto getFactorBySchedule(String type, String scheduleId) {
+        String prefixQuery = """
+                PREFIX owl: <http://www.w3.org/2002/07/owl#>
+                PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+                PREFIX five: <http://www.semanticweb.org/fivego#>
+                                
+                select ?factor ?condition
+                where{
+                    ?schedule rdf:type five:비행일정.
+                    ?schedule five:Id ?id.
+                    ?schedule five:has_weight ?type.
+                    ?type rdf:type five:""";
+        String middleQuery = """
+                .
+                ?type five:has_weight ?factor.
+                ?type five:Condition ?condition.
+                ?factor rdf:type five:요인.
+                Filter(?id =""";
+        String suffixQuery = ")}";
+
+        String queryResult = OntologyConnection.sendOntologySelectQuery(
+                        prefixQuery + type + middleQuery + scheduleId + suffixQuery)
+                .getBody();
+        if (queryResult == null) {
+            throw new IllegalArgumentException(QUERY_RESULT_EMPTY.getMessage());
+        }
+        return StringMapper.convertFactAndConditions(queryResult);
     }
 }
