@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table {
+            width: 95%;
+            border: 1px solid #444444;
+            text-align: center;
+            margin: 30px auto 0;
+            border-collapse: collapse;
+
+        }
+
+        th, td {
+            border: 1.5px solid #444444;
+            font-size: 20px;
+            width: 300px; /* 각 셀의 너비 조절 */
+            height: 50px;
+        }
+
+        h1 {
+            display: inline-block;
+            vertical-align: middle;
+            font-size: 40px;
+            margin-right: 30px;
+        }
+
+        .caution {
+            text-align: center;
+            margin-top: 70px;
+            font-size: 24px; /* 원하는 크기로 조절 */
+            font-weight: bold; /* 원하는 스타일로 조절 */
+            /* 다른 스타일링 속성 추가 가능 */
+        }
+
+
+    </style>
+</head>
+
+<body>
+
+<h1>&nbsp;&nbsp;&nbsp;&nbsp;Today's schedule</h1>
+<div class="caution">
+    오늘의 일정을 선택하세요 💡
+</div>
+
+
+<table>
+    <tr>
+        <th>출발 공항</th>
+        <th>출발 시각</th>
+        <th>도착 공항</th>
+        <th>도착 시각</th>
+        <th>비행기</th>
+        <th>비행기 기종</th>
+        <th>기장</th>
+        <th>부기장</th>
+        <th>정비사</th>
+    </tr>
+    <tr th:each="flySchedule: ${memberSchedules}">
+        <td th:text="*{flySchedule.startAirport}"></td>
+        <td th:text="${flySchedule.startTime}"></td>
+        <td th:text="${flySchedule.endAirport}"></td>
+        <td th:text="${flySchedule.endTime}"></td>
+        <td th:text="${flySchedule.aircraft}"></td>
+        <td th:text="${flySchedule.aircraftType}"></td>
+        <td th:text="${flySchedule.captain}"></td>
+        <td th:text="${flySchedule.firstOfficer}"></td>
+        <td th:text="${flySchedule.mechanic}"></td>
+        <td>
+            <a th:href="@{'/details/' + ${flySchedule.schedule}}">보기</a>
+        </td>
+
+        <!--    </tr>-->
+        <!--    <tr th:each="index: ${#numbers.sequence(1,3)}">-->
+        <!--        <td>울산</td>-->
+        <!--        <td>12:50 PM</td>-->
+        <!--        <td>서울</td>-->
+        <!--        <td>13:50 PM</td>-->
+        <!--        <td>AP13452</td>-->
+        <!--        <td>김규리</td>-->
+        <!--        <td>김보인</td>-->
+        <!--        <td>김준기</td>-->
+        <!--    </tr>-->
+        <!--    <tr th:each="index: ${#numbers.sequence(1,3)}">-->
+        <!--        <td>울산</td>-->
+        <!--        <td>12:50 PM</td>-->
+        <!--        <td>서울</td>-->
+        <!--        <td>13:50 PM</td>-->
+        <!--        <td>AP13452</td>-->
+        <!--        <td>김규리</td>-->
+        <!--        <td>김보인</td>-->
+        <!--        <td>김준기</td>-->
+        <!--    </tr>-->
+        <!--    <tr th:each="index: ${#numbers.sequence(1,3)}">-->
+        <!--        <td>울산</td>-->
+        <!--        <td>12:50 PM</td>-->
+        <!--        <td>서울</td>-->
+        <!--        <td>13:50 PM</td>-->
+        <!--        <td>AP13452</td>-->
+        <!--        <td>김규리</td>-->
+        <!--        <td>김보인</td>-->
+        <!--        <td>김준기</td>-->
+        <!--    </tr>-->
+
+</table>
+
+</body>
+</html>

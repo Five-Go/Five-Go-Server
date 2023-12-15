@@ -104,7 +104,8 @@
     <h2>Five-Go</h2>
     <p>현재 컨디션을 선택해주세요.</p>
     <form id="login-form" th:action th:object="${conditionReqDto}" method="post">
-        <input type="hidden" id="selected-condition" th:field="*{condition}" />
+        <input type="hidden" id="selected-condition" th:field="*{condition}"/>
+        <input type="hidden" th:field="*{memberId}" th:value="*{memberId}"/>
         <div id="condition-options">
             <div onclick="selectCondition(1)">1</div>
             <div onclick="selectCondition(2)">2</div>
