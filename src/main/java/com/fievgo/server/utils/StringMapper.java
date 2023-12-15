@@ -5,6 +5,7 @@ import static com.fievgo.server.utils.ErrorMessage.JSON_NODE_CONVERT_ERROR;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fievgo.server.dto.AirPortNxNyDto;
+import com.fievgo.server.dto.FactorAndCondtionDto;
 import com.fievgo.server.dto.FlyScheduleResDto;
 import com.fievgo.server.dto.ScheduleConditionDto;
 import com.fievgo.server.dto.WeatherConditionDto;
@@ -155,6 +156,48 @@ public class StringMapper {
             WeatherConditionDto of = WeatherConditionDto.of(weather);
             of.setTotalWeather();
             return of;
+        } catch (Exception e) {
+            throw new IllegalArgumentException(JSON_NODE_CONVERT_ERROR.getMessage());
+        }
+    }
+
+    public static List<String> convertFacts(String queryResult) {
+        List<String> result = new ArrayList<>();
+        List<String> titles = getTitleFromJsonNode(queryResult);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            JsonNode jsonNode = objectMapper.readTree(queryResult);
+
+            JsonNode resultsNode = jsonNode.path("results");
+            JsonNode bindingsNode = resultsNode.path("bindings");
+            for (JsonNode bindingNode : bindingsNode) {
+                HashMap<String, String> schedules = getScheduleData(titles, bindingNode);
+                result.add(schedules.get("factor").split("or")[1]);
+            }
+            return result;
+        } catch (Exception e) {
+            throw new IllegalArgumentException(JSON_NODE_CONVERT_ERROR.getMessage());
+        }
+    }
+
+    public static FactorAndCondtionDto convertFactAndConditions(String queryResult) {
+        List<String> result = new ArrayList<>();
+        List<String> titles = getTitleFromJsonNode(queryResult);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            JsonNode jsonNode = objectMapper.readTree(queryResult);
+
+            JsonNode resultsNode = jsonNode.path("results");
+            JsonNode bindingsNode = resultsNode.path("bindings");
+            JsonNode conditionNode = bindingsNode.get(0).path("condition");
+            String condition = conditionNode.path("value").asText().replace(ONTOLOGY_IRI, "");
+            for (JsonNode bindingNode : bindingsNode) {
+                HashMap<String, String> schedules = getScheduleData(titles, bindingNode);
+                result.add(schedules.get("factor").split("or")[1]);
+            }
+            return FactorAndCondtionDto.of(Long.parseLong(condition), result);
         } catch (Exception e) {
             throw new IllegalArgumentException(JSON_NODE_CONVERT_ERROR.getMessage());
         }

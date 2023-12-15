@@ -25,4 +25,7 @@ public class Factor {
 
     @Column(columnDefinition = "TEXT")
     private String name;
+
+    @Column(columnDefinition = "TEXT")
+    private String result;
 }
