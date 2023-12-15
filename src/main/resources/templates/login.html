@@ -32,29 +32,33 @@
 
         #login-form input {
             margin-bottom: 10px;
+            margin-left: 15px; /* 좌우 여백을 조절하여 가운데 정렬합니다. */
+            margin-right: 15px;
             padding: 10px;
         }
 
         #login-button {
-            padding: 10px;
-            background-color: #4CAF50;
+            font-size: 17px;
+            padding: 15px;
+            margin-top: 20px;
+            background-color: #4B89DC;
             color: white;
             border: none;
             cursor: pointer;
-            font-size: 20px;
-            margin-top: 17px;
+            width: 275px;
+            margin-left: auto; /* 좌우 여백을 조절하여 가운데 정렬합니다. */
+            margin-right: auto;
         }
 
         .input-field {
             font-size: 18px; /* 원하는 크기로 조정해주세요 */
         }
-
     </style>
 </head>
 <body>
 <div id="login-container">
     <div class="logo-container">
-        <img src="img/4741593.png" alt="logo" width="100" height="100">
+        <img src="img/4741593.png" alt="logo" width="120" height="120">
     </div>
     <h2>Five-Go</h2>
     <form id="login-form" th:action="@{/login}" th:object="${loginReqDto}" method="post">
