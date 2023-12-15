@@ -1,5 +1,6 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>FIVE GO</title>
@@ -9,7 +10,7 @@
             border: 1px solid #444444;
             text-align: center;
             margin: 20px auto 0;
-            border-collapse: collapse;
+            border-collapse : collapse;
         }
 
         th, td {
@@ -51,14 +52,24 @@
         .box-container {
             display: flex;
             justify-content: center;
-            margin-bottom: 20px;
+            margin-top: 10px;
+            margin-bottom: 30px;
+
+        }
+
+        .box-container2 {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
             margin-bottom: 80px;
+
         }
 
 
         .box {
+            border-radius: 15px;
             border: 1.5px solid #444444;
-            line-height: 30px;
+            line-height:30px;
             padding: 20px;
             font-size: 18px;
             width: 40%; /* 더 큰 가로 사이즈를 위한 값 */
@@ -66,23 +77,13 @@
             justify-content: center; /* 가로 방향 가운데 정렬 */
             align-items: center; /* 세로 방향 가운데 정렬 */
             text-align: center; /* 텍스트 수평 중앙 정렬 */
+
         }
 
-        .box2 {
-            border: 1.5px solid #444444;
-            line-height: 30px;
-            padding: 20px;
-            font-size: 18px;
-            width: 40%; /* 더 큰 가로 사이즈를 위한 값 */
-            margin: 0 auto; /* 중앙 정렬을 위해 추가 */
-            justify-content: center; /* 가로 방향 가운데 정렬 */
-            align-items: center; /* 세로 방향 가운데 정렬 */
-            text-align: center; /* 텍스트 수평 중앙 정렬 */
-        }
 
         .time {
             font-size: 19px; /* 글자 크기 변경 */
-            color: #808080; /* 글자 색상 변경 */
+            color: 	#808080; /* 글자 색상 변경 */
         }
 
         .loading-spinner-container {
@@ -155,16 +156,44 @@
         }
 햣
         @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .loading-spinner-container {
             visibility: hidden;
+        }
+
+        .tabs {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+
+
+        .tab {
+            padding: 10px 20px;
+            font-size: 20px;
+            background-color: #f0f0f0;
+            cursor: pointer;
+            margin-right: 10px;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .tab.active {
+            background-color:  #b2ddef;
+            /*color: red;*/
+        }
+
+        .close {
+            position: absolute;
+            top: 10px; /* 원하는 만큼 위로 올려주세요 */
+            right: 20px;
+            font-size: 36px;
+            color: #aaa;
+            cursor: pointer;
         }
 
     </style>
@@ -180,7 +209,7 @@
         <span th:text="${schedule.startAirport}"></span>
         <span>-</span>
         <span th:text="${schedule.endAirport}"></span>
-        <span> 비행 상세</span>
+        <span> 비행 </span>
     </h1>
     <div class="additional-text">
         <span th:text="${member.nameKr}"></span>
@@ -188,59 +217,87 @@
     </div>
 </div>
 
-<div class="box-container">
+    <div class="box-container">
 
-    <div class="box">
-        <span th:text="${schedule.startAirport}"></span>
-        <span>날씨 | </span>
-        <span th:text="${startAPWeather.totalWeather}"></span>
-        <br>
-        <span class="time">기준 시간 | </span>
-        <span th:text="${startAPWeather.baseTime}"></span>
-
-        <br>
-        <br>
-        <span th:text="${schedule.endAirport}"></span>
-        <span>날씨 | </span>
-        <span th:text="${endAPWeather.totalWeather}"></span>
-        <br>
-        <span class="time">기준 시간 | </span>
-        <span th:text="${startAPWeather.baseTime}"></span>
-
-
+        <div class="tabs">
+            <div class="tab active" onclick="showBox(0)">날씨</div>
+            <div class="tab" onclick="showBox(1)">조종사의 컨디션</div>
+            <div class="tab" onclick="showBox(2)">비행기 상태</div>
+        </div>
     </div>
-    <div class="box2">
-        <span th:text="${schedule.captain}"></span>
-        <span> 기장의 컨디션 | </span>
-        <span th:text="${condition.captainCondition}"></span>
-        <br>
-        <br>
-        <span th:text="${schedule.firstOfficer}"></span>
-        <span> 부기장의 컨디션 | </span>
-        <span th:text="${condition.firstOfficerCondition}"></span>
-        <br>
-        <br>
-        <span th:text="${schedule.mechanic}"></span>
-        <span> 정비사의 컨디션 | </span>
-        <span th:text="${condition.mechanicCondition}"></span>
-    </div>
-</div>
+<div class="box-container2">
+
+        <div class="box" id="box1" style="display: block;" >
+            <span th:text="${schedule.startAirport}"></span>
+            <span>날씨 | </span>
+            <span th:text="${startAPWeather.totalWeather}"></span>
+            <br>
+            <span class="time">기준 시간 | </span>
+            <span th:text="${startAPWeather.baseTime}"></span>
+
+            <br>
+            <br>
+            <span th:text="${schedule.endAirport}"></span>
+            <span>날씨 | </span>
+            <span th:text="${endAPWeather.totalWeather}"></span>
+            <br>
+            <span class="time">기준 시간 | </span>
+            <span th:text="${startAPWeather.baseTime}"></span>
+
+
+
+        </div>
+        <div class="box" id="box2" style="display: none;">
+            <span th:text="${schedule.captain}"></span>
+            <span> 기장의 컨디션 | </span>
+            <span th:text="${condition.captainCondition}"></span>
+            <br>
+            <br>
+            <span th:text="${schedule.firstOfficer}"></span>
+            <span> 부기장의 컨디션 | </span>
+            <span th:text="${condition.firstOfficerCondition}"></span>
+            <br>
+            <br>
+            <span th:text="${schedule.mechanic}"></span>
+            <span> 정비사의 컨디션 | </span>
+            <span th:text="${condition.mechanicCondition}"></span>
+        </div>
+
+        <div class="box" id="box3" style="display: none;">
+            비행기 A의 컨디션 &nbsp;&nbsp;  |&nbsp;&nbsp; 3
+            <br>
+            <br>
+            비행기 B의 컨디션 &nbsp;&nbsp;  |&nbsp;&nbsp; 3
+            <br>
+            <br>
+            비행기 C의 컨디션 &nbsp;&nbsp;  |&nbsp;&nbsp; 3
+        </div>
+        </div>
+
 
 
         <div class="box-container">
-            <button onclick="showLoadingSpinner()" style="padding: 10px 20px; font-size: 25px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;"> 위험 요소 추론 💡 </button>
+            <button onclick="showLoadingSpinner()" style="padding: 10px 20px; font-size: 21px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;"> 위험 예측하기  💡 </button>
         </div>
+
 <div class="loading-spinner-container" id="loadingSpinner">
     <div class="spinner"></div>
-    <div class="loading-text">추론중입니다!  🛫  </div>
+    <div class="loading-text"> &nbsp; &nbsp;추론중입니다  🛫  </div>
 </div>
 
 
 <div id="myModal" class="modal" style="display: none;">
     <div class="modal-content">
         <span class="close" onclick="closeModal()">&times;</span>
-        <p>추론이 완료되었습니다!</p>
-        <p>결과입니다!</p>
+        <p> 울산-김포행 비행 일정에서 주의할 점 알려드립니다. 🙂 <br> <br>
+
+            "" <br>
+            "" <br>
+            "" <br>
+            "" <br>
+            "" <br>
+        </p>
+
     </div>
 </div>
 
@@ -267,7 +324,31 @@
         const modal = document.getElementById('myModal');
         modal.style.display = 'none';
     }
-  </script>
+
+    function showBox(boxNumber) {
+
+        const tabs = document.querySelectorAll('.tab');
+        tabs.forEach(tab => tab.classList.remove('active'));
+
+        // 클릭된 탭에 active 클래스 추가하여 활성화 상태로 변경
+        document.querySelector(`.tab:nth-child(${boxNumber + 1})`).classList.add('active');
+
+        // 모든 상자를 숨깁니다.
+        document.getElementById('box1').style.display = 'none';
+        document.getElementById('box2').style.display = 'none';
+        document.getElementById('box3').style.display = 'none';
+
+        // 클릭된 탭에 해당하는 상자를 보여줍니다.
+        if (boxNumber === 0) {
+            document.getElementById('box1').style.display = 'block';
+        } else if (boxNumber === 1) {
+            document.getElementById('box2').style.display = 'block';
+
+        } else if (boxNumber === 2) {
+            document.getElementById('box3').style.display = 'block';
+        }
+    }
+</script>
 </body>
 </html>
 
