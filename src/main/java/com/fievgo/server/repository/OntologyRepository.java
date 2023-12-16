@@ -2,14 +2,18 @@ package com.fievgo.server.repository;
 
 import static com.fievgo.server.utils.ErrorMessage.QUERY_RESULT_EMPTY;
 
-import com.fievgo.server.dto.AirPortNxNyDto;
+import com.fievgo.server.dto.AirportNxNyDto;
+import com.fievgo.server.dto.AirportWeatherDelDto;
+import com.fievgo.server.dto.AirportWeatherResDto;
 import com.fievgo.server.dto.ConditionReqDto;
 import com.fievgo.server.dto.FactorAndCondtionDto;
 import com.fievgo.server.dto.FlyScheduleResDto;
 import com.fievgo.server.dto.ScheduleConditionDto;
-import com.fievgo.server.dto.UpdatePersonConditionDto;
+import com.fievgo.server.dto.UpdateConditionDto;
+import com.fievgo.server.dto.WeatherConditionDto;
 import com.fievgo.server.utils.OntologyConnection;
 import com.fievgo.server.utils.StringMapper;
+import java.util.Arrays;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -53,7 +57,7 @@ public class OntologyRepository {
 
     public void inputMemberCondition(ConditionReqDto conditionReqDto) {
         OntologyConnection.sendOntologyUpdateCondition(
-                UpdatePersonConditionDto.of(conditionReqDto.getMemberId(),
+                UpdateConditionDto.of("Person" + conditionReqDto.getMemberId(),
                         conditionReqDto.getCondition())
         );
     }
@@ -164,7 +168,7 @@ public class OntologyRepository {
         return StringMapper.convertToScheduleConditionDto(queryResult);
     }
 
-    public AirPortNxNyDto getAirPortNxAndNyByName(String airPortName) {
+    public AirportNxNyDto getAirPortNxAndNyByName(String airPortName) {
         String prefixQuery = """
                 PREFIX owl: <http://www.w3.org/2002/07/owl#>
                 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -239,5 +243,29 @@ public class OntologyRepository {
             throw new IllegalArgumentException(QUERY_RESULT_EMPTY.getMessage());
         }
         return StringMapper.convertFactAndConditions(queryResult);
+    }
+
+    public void saveAirportWeather(WeatherConditionDto airPortWeather, String airportName) {
+        List<String> weatherList = Arrays.stream(airPortWeather.getTotalWeather().split(", ")).toList();
+        List<AirportWeatherResDto> dtoList = weatherList.stream()
+                .map(weather -> AirportWeatherResDto.of(weather, airportName)).toList();
+        for (AirportWeatherResDto dto : dtoList) {
+            OntologyConnection.sendOntologyUpdateAirportWeather(
+                    dto
+            );
+        }
+    }
+
+    public void deleteAirportWeather(String airPortName) {
+        OntologyConnection.sendOntologyDeleteAirportWeather(
+                AirportWeatherDelDto.of(airPortName)
+        );
+    }
+
+    public void saveAirportCondition(int airportCondition, String airportName) {
+        OntologyConnection.sendOntologyUpdateCondition(
+                UpdateConditionDto.of(airportName,
+                        Long.parseLong(String.valueOf(airportCondition)))
+        );
     }
 }
