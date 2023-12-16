@@ -16,7 +16,7 @@ public class WeatherRepository {
     private final OpenApiConnection openApiConnection;
 
     public WeatherConditionDto getAirPortWeather(String airPortName) {
-        AirPortNxNyDto dto = ontologyRepository.getAirPortNxAndNyByName(airPortName.replace(" ", ""));
+        AirPortNxNyDto dto = ontologyRepository.getAirPortNxAndNyByName(airPortName);
         String result = openApiConnection.connectionWithWeatherAPI(dto);
         return StringMapper.convertToWeatherDto(result);
     }

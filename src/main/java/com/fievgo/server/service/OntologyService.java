@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 public class OntologyService {
     private final OntologyRepository ontologyRepository;
     private final MemberService memberService;
+    private final AirportService airportService;
 
     public boolean hasCondition(Long memberId) {
         return ontologyRepository.checkHasCondition(memberId);

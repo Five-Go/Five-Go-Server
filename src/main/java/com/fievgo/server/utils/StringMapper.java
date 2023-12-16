@@ -118,7 +118,7 @@ public class StringMapper {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             JsonNode jsonNode = objectMapper.readTree(body);
-
+            System.out.println(body);
             JsonNode resultsNode = jsonNode.path("results");
             JsonNode bindingsNode = resultsNode.path("bindings");
 
@@ -143,7 +143,6 @@ public class StringMapper {
                     .path("body")
                     .path("items")
                     .path("item");
-
             Iterator<JsonNode> itemsIterator = itemsNode.elements();
             while (itemsIterator.hasNext()) {
                 JsonNode item = itemsIterator.next();
