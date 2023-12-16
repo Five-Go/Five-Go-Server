@@ -1,8 +1,7 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <script src="https://cdn.jsdelivr.net/npm/typewriterjs/dist/core/typewriter.umd.js"></script>
 
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
     <meta charset="UTF-8">
     <title>FIVE GO</title>
     <style>
@@ -11,7 +10,7 @@
             border: 1px solid #444444;
             text-align: center;
             margin: 20px auto 0;
-            border-collapse: collapse;
+            border-collapse : collapse;
         }
 
         th, td {
@@ -70,7 +69,7 @@
         .box {
             border-radius: 15px;
             border: 1.5px solid #444444;
-            line-height: 30px;
+            line-height:30px;
             padding: 20px;
             font-size: 18px;
             width: 40%; /* 더 큰 가로 사이즈를 위한 값 */
@@ -84,7 +83,7 @@
 
         .time {
             font-size: 19px; /* 글자 크기 변경 */
-            color: #808080; /* 글자 색상 변경 */
+            color: 	#808080; /* 글자 색상 변경 */
         }
 
         .loading-spinner-container {
@@ -134,7 +133,7 @@
             left: 50%;
             transform: translate(-50%, -50%); /* 화면 중앙으로 이동시킵니다. */
             background-color: #fefefe;
-            padding: 10px;
+            padding: 20px;
             border: 1px solid #888;
             width: 80%; /* 모달 창의 너비 조정 */
             max-width: 800px; /* 최대 너비 설정 */
@@ -152,27 +151,14 @@
         }
 
         .modal-content p {
-            font-size: 22px; /* 모달 안의 단락의 글자 크기 */
+            font-size: 24px; /* 모달 안의 단락의 글자 크기 */
             line-height: 1.5; /* 줄 간격 조절 */
-            margin: 0;
         }
-        .modal-text {
-            margin-top: 10px; /* 원하는 만큼의 상단 여백 값 */
-        }
-
-
-
-
+햣
         @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
-
-
 
         .loading-spinner-container {
             visibility: hidden;
@@ -186,6 +172,7 @@
         }
 
 
+
         .tab {
             padding: 10px 20px;
             font-size: 20px;
@@ -196,7 +183,7 @@
         }
 
         .tab.active {
-            background-color: #b2ddef;
+            background-color:  #b2ddef;
             /*color: red;*/
         }
 
@@ -230,139 +217,96 @@
     </div>
 </div>
 
-<div class="box-container">
+    <div class="box-container">
 
-    <div class="tabs">
-        <div class="tab active" onclick="showBox(0)">날씨</div>
-        <div class="tab" onclick="showBox(1)">조종사의 컨디션</div>
-        <div class="tab" onclick="showBox(2)">비행기 상태</div>
+        <div class="tabs">
+            <div class="tab active" onclick="showBox(0)">날씨</div>
+            <div class="tab" onclick="showBox(1)">조종사의 컨디션</div>
+            <div class="tab" onclick="showBox(2)">비행기 상태</div>
+        </div>
     </div>
-</div>
 <div class="box-container2">
 
-    <div class="box" id="box1" style="display: block;">
-        <span th:text="${schedule.startAirport}"></span>
-        <span>날씨 | </span>
-        <span th:text="${startAPWeather.totalWeather}"></span>
-        <br>
-        <span class="time">기준 시간 | </span>
-        <span th:text="${startAPWeather.baseTime}"></span>
+        <div class="box" id="box1" style="display: block;" >
+            <span th:text="${schedule.startAirport}"></span>
+            <span>날씨 | </span>
+            <span th:text="${startAPWeather.totalWeather}"></span>
+            <br>
+            <span class="time">기준 시간 | </span>
+            <span th:text="${startAPWeather.baseTime}"></span>
 
-        <br>
-        <br>
-        <span th:text="${schedule.endAirport}"></span>
-        <span>날씨 | </span>
-        <span th:text="${endAPWeather.totalWeather}"></span>
-        <br>
-        <span class="time">기준 시간 | </span>
-        <span th:text="${startAPWeather.baseTime}"></span>
-
-
-    </div>
-    <div class="box" id="box2" style="display: none;">
-        <span th:text="${schedule.captain}"></span>
-        <span> 기장의 컨디션 | </span>
-        <span th:text="${condition.captainCondition}"></span>
-        <br>
-        <br>
-        <span th:text="${schedule.firstOfficer}"></span>
-        <span> 부기장의 컨디션 | </span>
-        <span th:text="${condition.firstOfficerCondition}"></span>
-        <br>
-        <br>
-        <span th:text="${schedule.mechanic}"></span>
-        <span> 정비사의 컨디션 | </span>
-        <span th:text="${condition.mechanicCondition}"></span>
-    </div>
-
-    <div class="box" id="box3" style="display: none;">
-        비행기 A의 컨디션 &nbsp;&nbsp; |&nbsp;&nbsp; 3
-        <br>
-        <br>
-        비행기 B의 컨디션 &nbsp;&nbsp; |&nbsp;&nbsp; 3
-        <br>
-        <br>
-        비행기 C의 컨디션 &nbsp;&nbsp; |&nbsp;&nbsp; 3
-    </div>
-</div>
+            <br>
+            <br>
+            <span th:text="${schedule.endAirport}"></span>
+            <span>날씨 | </span>
+            <span th:text="${endAPWeather.totalWeather}"></span>
+            <br>
+            <span class="time">기준 시간 | </span>
+            <span th:text="${startAPWeather.baseTime}"></span>
 
 
-<div class="box-container">
-    <button onclick="showLoadingSpinner()"
-            style="padding: 10px 20px; font-size: 21px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">
-        위험요인 예측하기
-    </button>
-</div>
+
+        </div>
+        <div class="box" id="box2" style="display: none;">
+            <span th:text="${schedule.captain}"></span>
+            <span> 기장의 컨디션 | </span>
+            <span th:text="${condition.captainCondition}"></span>
+            <br>
+            <br>
+            <span th:text="${schedule.firstOfficer}"></span>
+            <span> 부기장의 컨디션 | </span>
+            <span th:text="${condition.firstOfficerCondition}"></span>
+            <br>
+            <br>
+            <span th:text="${schedule.mechanic}"></span>
+            <span> 정비사의 컨디션 | </span>
+            <span th:text="${condition.mechanicCondition}"></span>
+        </div>
+
+        <div class="box" id="box3" style="display: none;">
+            비행기 A의 컨디션 &nbsp;&nbsp;  |&nbsp;&nbsp; 3
+            <br>
+            <br>
+            비행기 B의 컨디션 &nbsp;&nbsp;  |&nbsp;&nbsp; 3
+            <br>
+            <br>
+            비행기 C의 컨디션 &nbsp;&nbsp;  |&nbsp;&nbsp; 3
+        </div>
+        </div>
+
+
+
+        <div class="box-container">
+            <button onclick="showLoadingSpinner()" style="padding: 10px 20px; font-size: 21px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;"> 위험 예측하기  💡 </button>
+        </div>
 
 <div class="loading-spinner-container" id="loadingSpinner">
     <div class="spinner"></div>
-    <div class="loading-text"> &nbsp; &nbsp;예측중입니다&nbsp; ✈️️ &nbsp;</div>
+    <div class="loading-text"> &nbsp; &nbsp;추론중입니다  🛫  </div>
 </div>
 
 
 <div id="myModal" class="modal" style="display: none;">
     <div class="modal-content">
         <span class="close" onclick="closeModal()">&times;</span>
-        <div class="modal-text">
-            <p> <b>
-                <span th:text="${schedule.startAirport}"></span>
-                <span>-</span>
-                <span th:text="${schedule.endAirport}"></span>
-                <span> 행 비행 </span> </b>
-                <br>
-            <div id="text-container">
-                <span style="display: block; width: 80%; border-top: 1px solid grey; margin-bottom: 10px; margin: 0 auto;"></span>
-                <br>
+        <p> 울산-김포행 비행 일정에서 주의할 점 알려드립니다. 🙂 <br> <br>
 
-                <span th:each="factor: ${factors}">
-                <span >"</span>
-                <b><span th:text="${factor.name}"></span></b>
-                <span>" 로 인한 </span>
-                <b><span th:text="${factor.result}"></span></b>
-                <br>
-            </span>
-                <span> 의 위험성이 있습니다.  </span>
-                <br><br><br>
-
-                <span style="color: n;"> <br> "</span>
-                <b><span th:text="${organize.firstFactorName}" style="color: midnightblue;" ></span></b>
-                <span style="color: midnightblue;">" 로 인한 </span>
-                <b><span th:text="${organize.firstFactorResult}" style="color: midnightblue;"></span></b>
-                <span style="color: midnightblue;"> 사고 위험성이 가장 크며, </span>
-                <b><span th:text="${organize.mostResult}" style="color: midnightblue;"></span></b>
-                <span style="color: midnightblue;">을(를) 발생시키는 요인을 주의하세요 ⛔️  </span>
-
-                </p>
-            </div>
-        </div>
+            "" <br>
+            "" <br>
+            "" <br>
+            "" <br>
+            "" <br>
+        </p>
 
     </div>
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const textContainer = document.getElementById('text-container');
-        const typewriter = new Typewriter(textContainer, {
-            loop: true,
-        });
-
-        typewriter.typeString('test')
-            .pauseFor(1000)
-            .deleteAll()
-            .start();
-    }); // 타자기 시작
-</script>
-<script>
-
-
     function showLoadingSpinner() {
         const loadingSpinner = document.getElementById('loadingSpinner');
         loadingSpinner.style.visibility = 'visible';
-        loadingSpinner.classList.add('start-spinning'); // 스피너 시작을 나타내는 클래스 추가
-
-
-        //setTimeout(hideLoadingSpinner, 4500);
-        setTimeout(hideLoadingSpinner, 2500);
+       //setTimeout(hideLoadingSpinner, 4500);
+        setTimeout(hideLoadingSpinner, 1500);
     }
 
     function hideLoadingSpinner() {
@@ -407,3 +351,4 @@
 </script>
 </body>
 </html>
+
