@@ -70,10 +70,10 @@ public class OntologyService {
         reflectWeightFactor(factorWeight, mechanicFactors, MECHANIC_WEIGHT.getWeight());
         reflectWeightFactor(factorWeight, aircraftFactors, AIRCRAFT_WEIGHT.getWeight());
         reflectWeightFactor(factorWeight, airportFactors, AIRPORT_WEIGHT.getWeight());
-
         return factorWeight.entrySet().stream()
                 .map(entry -> FactorWeightResDto.of(entry.getKey(), entry.getValue()))
                 .sorted(Comparator.comparing(FactorWeightResDto::getWeight).reversed())
+                .limit(5)
                 .toList();
     }
 
