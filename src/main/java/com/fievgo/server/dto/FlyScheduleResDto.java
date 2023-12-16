@@ -50,4 +50,12 @@ public class FlyScheduleResDto {
         this.mechanic = name;
     }
 
+    public void changeStartAirport(String name) {
+        this.startAirport = name;
+    }
+
+    public void changeEndAirport(String name) {
+        this.endAirport = name;
+    }
+
 }

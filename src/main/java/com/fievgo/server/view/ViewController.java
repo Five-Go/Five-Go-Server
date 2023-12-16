@@ -8,6 +8,7 @@ import com.fievgo.server.dto.FactorWeightResDto;
 import com.fievgo.server.dto.FlyScheduleResDto;
 import com.fievgo.server.dto.LoginReqDto;
 import com.fievgo.server.dto.WeatherConditionDto;
+import com.fievgo.server.service.AirportService;
 import com.fievgo.server.service.FactorService;
 import com.fievgo.server.service.OntologyService;
 import com.fievgo.server.service.WeatherService;
@@ -31,6 +32,7 @@ public class ViewController {
     private final OntologyService ontologyService;
     private final WeatherService weatherService;
     private final FactorService factorService;
+    private final AirportService airportService;
 
     @GetMapping("/login")
     public String getLoginPage(Model model) {
@@ -52,6 +54,7 @@ public class ViewController {
                               @Login Member member) {
         Long memberId = member.getId();
         List<FlyScheduleResDto> memberSchedules = ontologyService.getMemberSchedules(memberId);
+        airportService.changeAirportNameFromDto(memberSchedules);
         model.addAttribute("memberSchedules", memberSchedules);
         return "main";
     }
@@ -64,6 +67,8 @@ public class ViewController {
         WeatherConditionDto endAPWeather = weatherService.getAirPortWeather(scheduleDto.getEndAirport());
         List<FactorWeightResDto> topDangerFactor = ontologyService.getTopDangerFactor(schedule);
         List<FactorWeightResDto> factorWeightResDtos = factorService.changeFactorName(topDangerFactor);
+
+        airportService.changeAirportNameFromDto(scheduleDto);
 
         model.addAttribute("schedule", scheduleDto);
         model.addAttribute("condition", ontologyService.getConditionBySchedule(scheduleDto.getSchedule()));
