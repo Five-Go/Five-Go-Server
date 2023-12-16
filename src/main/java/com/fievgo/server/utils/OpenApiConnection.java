@@ -1,6 +1,6 @@
 package com.fievgo.server.utils;
 
-import com.fievgo.server.dto.AirPortNxNyDto;
+import com.fievgo.server.dto.AirportNxNyDto;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 public class OpenApiConnection {
     private static final String API_KEY = "I%2BRCer5v6xEOLc2UOm6S00CMoKEGYNXqFuM1flmAKUr%2BuqeWznCEnWig9OxuxtLaI4VPMvyYjxXUsyYZujwJMw%3D%3D";
 
-    public String connectionWithWeatherAPI(AirPortNxNyDto dto) {
+    public String connectionWithWeatherAPI(AirportNxNyDto dto) {
 
         LocalDateTime now = LocalDateTime.now();
         String yyyyMMdd = now.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
