@@ -10,12 +10,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AirPortNxNyDto {
+public class AirportNxNyDto {
     private Integer nx;
     private Integer ny;
 
-    public static AirPortNxNyDto of(HashMap<String, String> nxny) {
-        return AirPortNxNyDto.builder()
+    public static AirportNxNyDto of(HashMap<String, String> nxny) {
+        return AirportNxNyDto.builder()
                 .nx(Integer.parseInt(nxny.get("nx")))
                 .ny(Integer.parseInt(nxny.get("ny")))
                 .build();

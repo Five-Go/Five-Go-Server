@@ -9,13 +9,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UpdatePersonConditionDto {
+public class UpdateConditionDto {
     private Long condition;
     private String conditionInputPerson;
 
-    public static UpdatePersonConditionDto of(Long id, Long condition) {
-        String prefix = "http://www.semanticweb.org/fivego#Person";
-        return UpdatePersonConditionDto.builder()
+    public static UpdateConditionDto of(String id, Long condition) {
+        String prefix = "http://www.semanticweb.org/fivego#";
+        return UpdateConditionDto.builder()
                 .condition(condition)
                 .conditionInputPerson(prefix + id)
                 .build();

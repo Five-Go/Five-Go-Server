@@ -1,7 +1,6 @@
 package com.fievgo.server.dto;
 
 import java.util.HashMap;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,69 +11,26 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class WeatherConditionDto {
-    private Boolean strongWind; // 강풍
-    private Boolean turbulence; // 난기류
-    private Boolean thunderstorm; // 뇌우
-    private Boolean snow; // 눈
-    private Boolean rain; // 비
-    private Boolean lowTemperature; // 저기온
-    private Boolean lowVisibility; // 저시정
-    private Boolean altocumulus; // 적락운
+    private Integer strongWind; // 강풍
+    private Integer turbulence; // 난기류
+    private Integer thunderstorm; // 뇌우
+    private Integer snow; // 눈
+    private Integer rain; // 비
+    private Integer lowTemperature; // 저기온
+    private Integer lowVisibility; // 저시정
+    private Integer altocumulus; // 적락운
     private String totalWeather;
     private String baseTime;
 
     public static WeatherConditionDto of(HashMap<String, String> weather) {
         return WeatherConditionDto.builder()
-                .strongWind(checkStrongWind(weather.get("UUU")))
-                .snow(checkSnow(weather.get("PTY")))
-                .rain(checkRain(weather.get("PTY")))
-                .lowTemperature(checkLowTemperature(weather.get("T1H")))
-                .lowVisibility(checkLowVisibility(weather.get("VVV")))
+                .strongWind(Integer.parseInt(weather.get("UUU")))
+                .snow(Integer.parseInt(weather.get("PTY")))
+                .rain(Integer.parseInt(weather.get("PTY")))
+                .lowTemperature(Integer.parseInt(weather.get("T1H")))
+                .lowVisibility(Integer.parseInt(weather.get("VVV")))
                 .baseTime(formatTime(weather.get("baseTime")))
                 .build();
-
-    }
-
-    private static Boolean checkStrongWind(String uuu) {
-        boolean isStrongWind = false;
-        if (Integer.parseInt(uuu) > 1) {
-            isStrongWind = true;
-        }
-        return isStrongWind;
-    }
-
-    private static Boolean checkSnow(String pty) {
-        boolean isSnow = false;
-        List<String> list = List.of("2", "3", "7");
-        if (list.contains(pty)) {
-            isSnow = true;
-        }
-        return isSnow;
-    }
-
-    private static Boolean checkRain(String pty) {
-        boolean isRain = false;
-        List<String> list = List.of("1", "3", "4", "6", "7");
-        if (list.contains(pty)) {
-            isRain = true;
-        }
-        return isRain;
-    }
-
-    private static Boolean checkLowVisibility(String vvv) {
-        boolean isLowVisibility = false;
-        if (!vvv.equals("0")) {
-            isLowVisibility = true;
-        }
-        return isLowVisibility;
-    }
-
-    private static Boolean checkLowTemperature(String t1h) {
-        boolean isLowTemperature = false;
-        if (Integer.parseInt(t1h) < 0) {
-            isLowTemperature = true;
-        }
-        return isLowTemperature;
     }
 
     @Override
@@ -93,7 +49,7 @@ public class WeatherConditionDto {
 
     public void setTotalWeather() {
         String totalWeather = "";
-        if (strongWind != null && strongWind) {
+        if (strongWind != null && strongWind > 0) {
             if (totalWeather.equals("")) {
                 totalWeather += "강풍";
             } else {
@@ -101,7 +57,7 @@ public class WeatherConditionDto {
             }
         }
 
-        if (turbulence != null && turbulence) {
+        if (turbulence != null && turbulence > 0) {
             if (totalWeather.equals("")) {
                 totalWeather += "난기류";
             } else {
@@ -109,7 +65,7 @@ public class WeatherConditionDto {
             }
         }
 
-        if (thunderstorm != null && thunderstorm) {
+        if (thunderstorm != null && thunderstorm > 0) {
             if (totalWeather.equals("")) {
                 totalWeather += "뇌우";
             } else {
@@ -117,7 +73,7 @@ public class WeatherConditionDto {
             }
         }
 
-        if (snow != null && snow) {
+        if (snow != null && snow > 0) {
             if (totalWeather.equals("")) {
                 totalWeather += "눈";
             } else {
@@ -125,7 +81,7 @@ public class WeatherConditionDto {
             }
         }
 
-        if (rain != null && rain) {
+        if (rain != null && rain > 0) {
             if (totalWeather.equals("")) {
                 totalWeather += "비";
             } else {
@@ -133,7 +89,7 @@ public class WeatherConditionDto {
             }
         }
 
-        if (lowTemperature != null && lowTemperature) {
+        if (lowTemperature != null && lowTemperature > 0) {
             if (totalWeather.equals("")) {
                 totalWeather += "저기온";
             } else {
@@ -141,7 +97,7 @@ public class WeatherConditionDto {
             }
         }
 
-        if (lowVisibility != null && lowVisibility) {
+        if (lowVisibility != null && lowVisibility > 0) {
             if (totalWeather.equals("")) {
                 totalWeather += "저시정";
             } else {
@@ -149,7 +105,7 @@ public class WeatherConditionDto {
             }
         }
 
-        if (altocumulus != null && altocumulus) {
+        if (altocumulus != null && altocumulus > 0) {
             if (totalWeather.equals("")) {
                 totalWeather += "적락운";
             } else {
@@ -174,5 +130,56 @@ public class WeatherConditionDto {
         String minutes = inputTime.substring(2);
 
         return hours + ":" + minutes;
+    }
+
+    public Integer getTotalCondition() {
+        int totalCondition = 0;
+        int count = 0;
+        if (strongWind != null && strongWind > 0) {
+            totalCondition += strongWind;
+            count++;
+        }
+
+        if (turbulence != null && turbulence > 0) {
+            totalCondition += turbulence;
+            count++;
+        }
+
+        if (thunderstorm != null && thunderstorm > 0) {
+            totalCondition += thunderstorm;
+            count++;
+        }
+
+        if (snow != null && snow > 0) {
+            totalCondition += snow;
+            count++;
+        }
+
+        if (rain != null && rain > 0) {
+            totalCondition += rain;
+            count++;
+        }
+
+        if (lowTemperature != null) {
+            if (lowTemperature < 0) {
+                lowTemperature *= -1;
+            }
+            totalCondition += lowTemperature / 5;
+            count++;
+        }
+
+        if (lowVisibility != null) {
+            if (lowVisibility < 0) {
+                lowVisibility *= -1;
+            }
+            totalCondition += lowVisibility / 5;
+            count++;
+        }
+
+        if (altocumulus != null) {
+            totalCondition += altocumulus;
+            count++;
+        }
+        return totalCondition / count;
     }
 }

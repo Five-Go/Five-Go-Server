@@ -4,7 +4,7 @@ import static com.fievgo.server.utils.ErrorMessage.JSON_NODE_CONVERT_ERROR;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fievgo.server.dto.AirPortNxNyDto;
+import com.fievgo.server.dto.AirportNxNyDto;
 import com.fievgo.server.dto.FactorAndCondtionDto;
 import com.fievgo.server.dto.FlyScheduleResDto;
 import com.fievgo.server.dto.ScheduleConditionDto;
@@ -111,20 +111,20 @@ public class StringMapper {
         }
     }
 
-    public static AirPortNxNyDto convertToAirPortNxNyDto(String body) {
-        List<AirPortNxNyDto> result = new ArrayList<>();
+    public static AirportNxNyDto convertToAirPortNxNyDto(String body) {
+        List<AirportNxNyDto> result = new ArrayList<>();
         List<String> titles = getTitleFromJsonNode(body);
 
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             JsonNode jsonNode = objectMapper.readTree(body);
-
+            System.out.println(body);
             JsonNode resultsNode = jsonNode.path("results");
             JsonNode bindingsNode = resultsNode.path("bindings");
 
             for (JsonNode bindingNode : bindingsNode) {
                 HashMap<String, String> nxny = getScheduleData(titles, bindingNode);
-                result.add(AirPortNxNyDto.of(nxny));
+                result.add(AirportNxNyDto.of(nxny));
             }
             return result.get(0);
         } catch (Exception e) {
@@ -143,7 +143,6 @@ public class StringMapper {
                     .path("body")
                     .path("items")
                     .path("item");
-
             Iterator<JsonNode> itemsIterator = itemsNode.elements();
             while (itemsIterator.hasNext()) {
                 JsonNode item = itemsIterator.next();

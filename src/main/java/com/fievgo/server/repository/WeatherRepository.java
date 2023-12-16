@@ -1,6 +1,6 @@
 package com.fievgo.server.repository;
 
-import com.fievgo.server.dto.AirPortNxNyDto;
+import com.fievgo.server.dto.AirportNxNyDto;
 import com.fievgo.server.dto.WeatherConditionDto;
 import com.fievgo.server.utils.OpenApiConnection;
 import com.fievgo.server.utils.StringMapper;
@@ -16,7 +16,7 @@ public class WeatherRepository {
     private final OpenApiConnection openApiConnection;
 
     public WeatherConditionDto getAirPortWeather(String airPortName) {
-        AirPortNxNyDto dto = ontologyRepository.getAirPortNxAndNyByName(airPortName.replace(" ", ""));
+        AirportNxNyDto dto = ontologyRepository.getAirPortNxAndNyByName(airPortName);
         String result = openApiConnection.connectionWithWeatherAPI(dto);
         return StringMapper.convertToWeatherDto(result);
     }
