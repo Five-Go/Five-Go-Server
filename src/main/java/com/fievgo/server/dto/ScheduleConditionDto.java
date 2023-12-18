@@ -20,11 +20,13 @@ public class ScheduleConditionDto {
         String captainCondition = data.get("CaptainCondition");
         String firstOfficerCondition = data.get("FirstOfficerCondition");
         String mechanicCondition = data.get("MechanicCondition");
+        String aircraftCondition = data.get("AircraftCondition");
 
         return ScheduleConditionDto.builder()
                 .captainCondition(captainCondition.equals("-1") ? "미입력" : captainCondition)
                 .firstOfficerCondition(firstOfficerCondition.equals("-1") ? "미입력" : firstOfficerCondition)
                 .mechanicCondition(mechanicCondition.equals("-1") ? "미입력" : mechanicCondition)
+                .aircraftCondition(aircraftCondition.equals("-1") ? "미확인" : aircraftCondition)
                 .build();
 
     }
