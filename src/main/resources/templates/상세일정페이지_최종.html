@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <script src="https://cdn.jsdelivr.net/npm/typewriterjs/dist/core/typewriter.umd.js"></script>
+
     <meta charset="UTF-8">
     <title>FIVE GO</title>
     <style>
@@ -132,7 +134,7 @@
             left: 50%;
             transform: translate(-50%, -50%); /* 화면 중앙으로 이동시킵니다. */
             background-color: #fefefe;
-            padding: 20px;
+            padding: 10px;
             border: 1px solid #888;
             width: 80%; /* 모달 창의 너비 조정 */
             max-width: 800px; /* 최대 너비 설정 */
@@ -150,11 +152,16 @@
         }
 
         .modal-content p {
-            font-size: 24px; /* 모달 안의 단락의 글자 크기 */
+            font-size: 22px; /* 모달 안의 단락의 글자 크기 */
             line-height: 1.5; /* 줄 간격 조절 */
+            margin: 0;
+        }
+        .modal-text {
+            margin-top: 10px; /* 원하는 만큼의 상단 여백 값 */
         }
 
-        햣
+
+
 
         @keyframes spin {
             0% {
@@ -164,6 +171,8 @@
                 transform: rotate(360deg);
             }
         }
+
+
 
         .loading-spinner-container {
             visibility: hidden;
@@ -267,13 +276,16 @@
     </div>
 
     <div class="box" id="box3" style="display: none;">
-        비행기 A의 컨디션 &nbsp;&nbsp; |&nbsp;&nbsp; 3
+        <span th:text="${schedule.aircraft}"></span>
+        <span>의 컨디션
+            &nbsp;&nbsp; |&nbsp;&nbsp; </span>
+        <span th:text="${condition.aircraftCondition}"></span>
         <br>
+        <span>제작일자 &nbsp;&nbsp; |&nbsp;&nbsp; </span>
+        <span th:text="${condition.aircraftCreatedAt}"></span>
         <br>
-        비행기 B의 컨디션 &nbsp;&nbsp; |&nbsp;&nbsp; 3
-        <br>
-        <br>
-        비행기 C의 컨디션 &nbsp;&nbsp; |&nbsp;&nbsp; 3
+        <span>마지막 점검일 &nbsp;&nbsp; |&nbsp;&nbsp; </span>
+        <span th:text="${condition.aircraftOverHole}"></span>
     </div>
 </div>
 
@@ -281,53 +293,79 @@
 <div class="box-container">
     <button onclick="showLoadingSpinner()"
             style="padding: 10px 20px; font-size: 21px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">
-        위험 예측하기 💡
+        위험요인 예측하기
     </button>
 </div>
 
 <div class="loading-spinner-container" id="loadingSpinner">
     <div class="spinner"></div>
-    <div class="loading-text"> &nbsp; &nbsp;추론중입니다 🛫</div>
+    <div class="loading-text"> &nbsp; &nbsp;예측중입니다&nbsp; ✈️️ &nbsp;</div>
 </div>
 
 
 <div id="myModal" class="modal" style="display: none;">
     <div class="modal-content">
         <span class="close" onclick="closeModal()">&times;</span>
-        <p>
-            <span th:text="${schedule.startAirport}"></span>
-            <span>-</span>
-            <span th:text="${schedule.endAirport}"></span>
-            <span> 행 비행 일정에서 주의할 점 알려드립니다. 🙂</span>
-            <br> <br>
-            <span>== 주의해야할 점 == </span><br>
-            <span th:each="factor: ${factors}">
-                <span>"</span>
+        <div class="modal-text">
+            <p> <b>
+                <span th:text="${schedule.startAirport}"></span>
+                <span>-</span>
+                <span th:text="${schedule.endAirport}"></span>
+                <span> 행 비행 </span> </b>
+                <br>
+            <div id="text-container">
+                <span style="display: block; width: 80%; border-top: 1px solid grey; margin-bottom: 10px; margin: 0 auto;"></span>
+                <br>
+
+                <span th:each="factor: ${factors}">
+                <span >"</span>
                 <b><span th:text="${factor.name}"></span></b>
                 <span>" 로 인한 </span>
                 <b><span th:text="${factor.result}"></span></b>
                 <br>
             </span>
-            <br><br>
-            <span>== 정리 == </span><br>
-            <span>["</span>
-            <b><span th:text="${organize.firstFactorName}"></span></b>
-            <span>" 로 인한 </span>
-            <b><span th:text="${organize.firstFactorResult}"></span></b>
-            <span>]이 가장 조심해야할 부분이며, </span>
-            <b><span th:text="${organize.mostResult}"></span></b>
-            <span>을(를) 발생시키는 요인이 다수 존재합니다. </span>
-        </p>
+                <span> 의 위험성이 있습니다.  </span>
+                <br><br><br>
+
+                <span style="color: n;"> <br> "</span>
+                <b><span th:text="${organize.firstFactorName}" style="color: midnightblue;" ></span></b>
+                <span style="color: midnightblue;">" 로 인한 </span>
+                <b><span th:text="${organize.firstFactorResult}" style="color: midnightblue;"></span></b>
+                <span style="color: midnightblue;"> 사고 위험성이 가장 크며, </span>
+                <b><span th:text="${organize.mostResult}" style="color: midnightblue;"></span></b>
+                <span style="color: midnightblue;">을(를) 발생시키는 요인을 주의하세요 ⛔️  </span>
+
+                </p>
+            </div>
+        </div>
 
     </div>
 </div>
 
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const textContainer = document.getElementById('text-container');
+        const typewriter = new Typewriter(textContainer, {
+            loop: true,
+        });
+
+        typewriter.typeString('test')
+            .pauseFor(1000)
+            .deleteAll()
+            .start();
+    }); // 타자기 시작
+</script>
+<script>
+
+
     function showLoadingSpinner() {
         const loadingSpinner = document.getElementById('loadingSpinner');
         loadingSpinner.style.visibility = 'visible';
+        loadingSpinner.classList.add('start-spinning'); // 스피너 시작을 나타내는 클래스 추가
+
+
         //setTimeout(hideLoadingSpinner, 4500);
-        setTimeout(hideLoadingSpinner, 1500);
+        setTimeout(hideLoadingSpinner, 2500);
     }
 
     function hideLoadingSpinner() {
@@ -372,4 +410,3 @@
 </script>
 </body>
 </html>
-

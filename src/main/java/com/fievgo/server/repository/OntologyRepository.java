@@ -144,7 +144,7 @@ public class OntologyRepository {
                 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
                 PREFIX five: <http://www.semanticweb.org/fivego#>
                                 
-                select ?Captain ?CaptainCondition ?FirstOfficer ?FirstOfficerCondition ?Mechanic ?MechanicCondition ?Aircraft ?AircraftCondition 
+                select ?CaptainCondition ?FirstOfficerCondition ?MechanicCondition ?AircraftCondition ?AircraftCreatedAt ?LastOverhaul
                 where{
                     ?Schedule rdf:type five:비행일정.
                     ?Schedule five:Id ?id.
@@ -160,6 +160,8 @@ public class OntologyRepository {
                     ?Schedule five:has_weight ?Aircraft.
                     ?Aircraft rdf:type five:비행기.
                     ?Aircraft five:Condition ?AircraftCondition.
+                    ?Aircraft five:제작일자 ?AircraftCreatedAt.
+                    ?Aircraft five:LastOverhaul ?LastOverhaul.
                     Filter(?id=""";
         String suffixQuery = ")}";
 

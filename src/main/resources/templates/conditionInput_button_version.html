@@ -45,7 +45,7 @@
             padding: 20px;
         }
 
-        #condition-options div{
+        #condition-options div {
             padding: 8px 10px; /* 상하좌우 여백을 조정하여 크기 변경 */
             font-size: 20px; /* 버튼 안의 글자 크기 조정 */
             background-color: #b2ddef;
@@ -75,7 +75,7 @@
 
 
         .selected {
-            background-color: #ffcc00;  /* 선택한 항목의 색상을 여기서 설정해주세요 */
+            background-color: #ffcc00; /* 선택한 항목의 색상을 여기서 설정해주세요 */
         }
 
         #condition-options div.selected {
@@ -117,29 +117,30 @@
         <button id="submit-button" onclick="submitCondition()">제출</button>
     </form>
 </div>
-        <script>
-            var selectedValue = null;
-            function selectCondition(value) {
-                var elements = document.querySelectorAll('#condition-options div');
-                elements.forEach(function(element) {
-                    element.classList.remove('selected');
-                });
+<script>
+    var selectedValue = null;
 
-                var selectedElement = document.querySelector('#condition-options div:nth-child(' + value + ')');
+    function selectCondition(value) {
+        var elements = document.querySelectorAll('#condition-options div');
+        elements.forEach(function (element) {
+            element.classList.remove('selected');
+        });
 
-                selectedElement.classList.add('selected');
-                selectedValue = value;
-                document.getElementById('selected-condition').value = value;
-            }
+        var selectedElement = document.querySelector('#condition-options div:nth-child(' + value + ')');
 
-            function submitCondition() {
-                if (selectedValue !== null) {
-                    alert('선택한 값: ' + selectedValue);
-                    // 여기서 선택한 값(selectedValue)을 서버로 전송하거나 원하는 작업을 수행할 수 있어요.
-                } else {
-                    alert('값을 선택해주세요!');
-                }
-            }
-        </script>
+        selectedElement.classList.add('selected');
+        selectedValue = value;
+        document.getElementById('selected-condition').value = value;
+    }
+
+    function submitCondition() {
+        if (selectedValue !== null) {
+            alert('선택한 값: ' + selectedValue);
+            // 여기서 선택한 값(selectedValue)을 서버로 전송하거나 원하는 작업을 수행할 수 있어요.
+        } else {
+            alert('값을 선택해주세요!');
+        }
+    }
+</script>
 </body>
 </html>
