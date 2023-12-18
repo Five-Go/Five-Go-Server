@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
@@ -11,6 +10,7 @@
             text-align: center;
             margin-top: 30px;
         }
+
         th, td {
             border: 1px solid #444444;
             font-size: 20px;
@@ -52,6 +52,7 @@
             justify-content: center;
             margin-bottom: 20px;
         }
+
         .box-container2 {
             display: flex;
             justify-content: center;
@@ -83,7 +84,7 @@
 
         .time {
             font-size: 18px; /* 글자 크기 변경 */
-            color: 	#808080; /* 글자 색상 변경 */
+            color: #808080; /* 글자 색상 변경 */
         }
 
 
@@ -93,92 +94,91 @@
 <body>
 <div class="wrapper">
     <div class="logo-container">
-        <img src="img/4741593.png" alt="logo" width="100" height="100">
+        <img src="../static/img/4741593.png" alt="logo" width="100" height="100">
     </div>
-    <h1>FIVE GO   |    비행일정상세     </h1>
+    <h1>FIVE GO | 비행일정상세 </h1>
 
     <div class="additional-text">
         김준기님
     </div>
 </div>
 
-    <div class="box-container">
-        <div class="box">
-           출발공항 날씨 &nbsp;&nbsp; &nbsp; 🌨
-            <br>
-            <span class="time">기준 시간 12:40</span>
-            <br>
-            <br>
-            출발공항 날씨 &nbsp;&nbsp; &nbsp; 🌨
-            <br>
-            <span class="time">기준 시간 12:40</span>
-        </div>
+<div class="box-container">
+    <div class="box">
+        출발공항 날씨 &nbsp;&nbsp; &nbsp; 🌨
+        <br>
+        <span class="time">기준 시간 12:40</span>
+        <br>
+        <br>
+        출발공항 날씨 &nbsp;&nbsp; &nbsp; 🌨
+        <br>
+        <span class="time">기준 시간 12:40</span>
+    </div>
 
-        <div class="box">
-            도착공항 날씨 &nbsp;&nbsp; &nbsp; 🌨
-            <br>
-            <span class="time">기준 시간 18:40</span>
-        </div>
+    <div class="box">
+        도착공항 날씨 &nbsp;&nbsp; &nbsp; 🌨
+        <br>
+        <span class="time">기준 시간 18:40</span>
+    </div>
 
+</div>
+
+
+<div class="box-container2">
+    <div class="box2">
+        김준기 기장의 컨디션 &nbsp;&nbsp; |&nbsp;&nbsp; 3
+    </div>
+    <div class="box2">
+        김규리 부기장의 컨디션 &nbsp;&nbsp; |&nbsp;&nbsp; 3
+    </div>
+
+    <div class="box2">
+        김보인 정비사의 컨디션 &nbsp;&nbsp; |&nbsp;&nbsp; 미입력
     </div>
 
 
-    <div class="box-container2">
-        <div class="box2">
-            김준기 기장의 컨디션 &nbsp;&nbsp;  |&nbsp;&nbsp; 3
-        </div>
-        <div class="box2">
-            김규리 부기장의 컨디션 &nbsp;&nbsp; |&nbsp;&nbsp; 3
-        </div>
-
-        <div class="box2">
-            김보인 정비사의 컨디션 &nbsp;&nbsp;  |&nbsp;&nbsp; 미입력
-        </div>
+</div>
 
 
-    </div>
+<table>
+    <tr>
+        <th>N</th>
+        <th>요인</th>
+        <th>결과</th>
+        <th>위험도</th>
 
-
-
-    <table>
-        <tr>
-            <th>N</th>
-            <th>요인</th>
-            <th>결과</th>
-            <th>위험도</th>
-
-        </tr>
-        <tr th:each="index: ${#numbers.sequence(1,3)}">
-            <td th:text="${index}">1</td>
-            <td>악기상에 의한 활주로 탈주</td>
-            <td>활주로 이탈</td>
-            <td>4</td>
-        </tr>
-        <tr th:each="index: ${#numbers.sequence(1,3)}">
-            <td th:text="${index}">2</td>
-            <td>악기상에 의한 활주로 탈주</td>
-            <td>활주로 이탈</td>
-            <td>4</td>
-        </tr>
-        <tr th:each="index: ${#numbers.sequence(1,3)}">
-            <td th:text="${index}">3</td>
-            <td>악기상에 의한 활주로 탈주</td>
-            <td>활주로 이탈</td>
-            <td>4</td>
-        </tr>
-        <tr th:each="index: ${#numbers.sequence(1,3)}">
-            <td th:text="${index}">4</td>
-            <td>악기상에 의한 활주로 탈주</td>
-            <td>활주로 이탈</td>
-            <td>4</td>
-        </tr>
-        <tr th:each="index: ${#numbers.sequence(1,3)}">
-            <td th:text="${index}">5</td>
-            <td>악기상에 의한 활주로 탈주</td>
-            <td>활주로 이탈</td>
-            <td>4</td>
-        </tr>
-    </table>
+    </tr>
+    <tr th:each="index: ${#numbers.sequence(1,3)}">
+        <td th:text="${index}">1</td>
+        <td>악기상에 의한 활주로 탈주</td>
+        <td>활주로 이탈</td>
+        <td>4</td>
+    </tr>
+    <tr th:each="index: ${#numbers.sequence(1,3)}">
+        <td th:text="${index}">2</td>
+        <td>악기상에 의한 활주로 탈주</td>
+        <td>활주로 이탈</td>
+        <td>4</td>
+    </tr>
+    <tr th:each="index: ${#numbers.sequence(1,3)}">
+        <td th:text="${index}">3</td>
+        <td>악기상에 의한 활주로 탈주</td>
+        <td>활주로 이탈</td>
+        <td>4</td>
+    </tr>
+    <tr th:each="index: ${#numbers.sequence(1,3)}">
+        <td th:text="${index}">4</td>
+        <td>악기상에 의한 활주로 탈주</td>
+        <td>활주로 이탈</td>
+        <td>4</td>
+    </tr>
+    <tr th:each="index: ${#numbers.sequence(1,3)}">
+        <td th:text="${index}">5</td>
+        <td>악기상에 의한 활주로 탈주</td>
+        <td>활주로 이탈</td>
+        <td>4</td>
+    </tr>
+</table>
 
 
 </body>
