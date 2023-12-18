@@ -13,11 +13,22 @@
             margin: 0;
         }
 
+        th, td {
+            border: 1.5px solid #444444;
+            font-size: 20px;
+        }
+
         #login-container {
             text-align: center;
             border: 1px solid #ccc;
             padding: 20px;
             width: 300px;
+        }
+
+        .logo-container {
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 30px;
         }
 
         #login-container h2 {
@@ -58,7 +69,7 @@
 <body>
 <div id="login-container">
     <div class="logo-container">
-        <img src="img/4741593.png" alt="logo" width="120" height="120">
+        <img src="../static/img/4741593.png" alt="logo" width="120" height="120">
     </div>
     <h2>Five-Go</h2>
     <form id="login-form" th:action="@{/login}" th:object="${loginReqDto}" method="post">

@@ -153,7 +153,9 @@
             font-size: 24px; /* 모달 안의 단락의 글자 크기 */
             line-height: 1.5; /* 줄 간격 조절 */
         }
-햣
+
+        햣
+
         @keyframes spin {
             0% {
                 transform: rotate(0deg);
@@ -173,7 +175,7 @@
 <body>
 <div class="wrapper">
     <div class="logo-container">
-        <img src="img/4741593.png" alt="logo" width="100" height="100">
+        <img src="../static/img/4741593.png" alt="logo" width="100" height="100">
     </div>
     <h1>
         <span>FIVE GO | </span>
@@ -227,12 +229,15 @@
 </div>
 
 
-        <div class="box-container">
-            <button onclick="showLoadingSpinner()" style="padding: 10px 20px; font-size: 25px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;"> 위험 요소 추론 💡 </button>
-        </div>
+<div class="box-container">
+    <button onclick="showLoadingSpinner()"
+            style="padding: 10px 20px; font-size: 25px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">
+        위험 요소 추론 💡
+    </button>
+</div>
 <div class="loading-spinner-container" id="loadingSpinner">
     <div class="spinner"></div>
-    <div class="loading-text">추론중입니다!  🛫  </div>
+    <div class="loading-text">추론중입니다! 🛫</div>
 </div>
 
 
@@ -248,7 +253,7 @@
     function showLoadingSpinner() {
         const loadingSpinner = document.getElementById('loadingSpinner');
         loadingSpinner.style.visibility = 'visible';
-       //setTimeout(hideLoadingSpinner, 4500);
+        //setTimeout(hideLoadingSpinner, 4500);
         setTimeout(hideLoadingSpinner, 1500);
     }
 
@@ -267,7 +272,7 @@
         const modal = document.getElementById('myModal');
         modal.style.display = 'none';
     }
-  </script>
+</script>
 </body>
 </html>
 

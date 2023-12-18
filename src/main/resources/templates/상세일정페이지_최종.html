@@ -215,7 +215,7 @@
 <body>
 <div class="wrapper">
     <div class="logo-container">
-        <img src="img/4741593.png" alt="logo" width="100" height="100">
+        <img src="/img/4741593.png" alt="logo" width="100" height="100">
     </div>
     <h1>
         <span>FIVE GO | </span>
@@ -318,20 +318,19 @@
                 <br>
 
                 <span th:each="factor: ${factors}">
-                <span >"</span>
                 <b><span th:text="${factor.name}"></span></b>
-                <span>" 로 인한 </span>
+                <span> 로 인한 </span>
                 <b><span th:text="${factor.result}"></span></b>
                 <br>
             </span>
                 <span> 의 위험성이 있습니다.  </span>
                 <br><br><br>
 
-                <span style="color: n;"> <br> "</span>
                 <b><span th:text="${organize.firstFactorName}" style="color: midnightblue;" ></span></b>
-                <span style="color: midnightblue;">" 로 인한 </span>
+                <span style="color: midnightblue;"> (으)로 인한 </span>
                 <b><span th:text="${organize.firstFactorResult}" style="color: midnightblue;"></span></b>
-                <span style="color: midnightblue;"> 사고 위험성이 가장 크며, </span>
+                <br>
+                <span style="color: midnightblue;">사고 위험성이 가장 크며, </span>
                 <b><span th:text="${organize.mostResult}" style="color: midnightblue;"></span></b>
                 <span style="color: midnightblue;">을(를) 발생시키는 요인을 주의하세요 ⛔️  </span>
 
