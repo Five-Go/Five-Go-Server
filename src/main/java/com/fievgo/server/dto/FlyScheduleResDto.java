@@ -26,9 +26,9 @@ public class FlyScheduleResDto {
         return FlyScheduleResDto.builder()
                 .schedule(data.get("Schedule").split("Schedule")[1])
                 .startAirport(data.get("StartAirport"))
-                .startTime(data.get("StartTime"))
+                .startTime(convertTimeFormat(data.get("StartTime")))
                 .endAirport(data.get("EndAirport"))
-                .endTime(data.get("EndTime"))
+                .endTime(convertTimeFormat(data.get("EndTime")))
                 .aircraft(data.get("Aircraft"))
                 .aircraftType(data.get("AircraftType"))
                 .captain(data.get("Captain"))
@@ -56,6 +56,15 @@ public class FlyScheduleResDto {
 
     public void changeEndAirport(String name) {
         this.endAirport = name;
+    }
+
+
+    private static String convertTimeFormat(String time) {
+        String[] dateTime = time.split("T");
+        String[] dates = dateTime[0].split("-");
+        String[] times = dateTime[1].split(":");
+
+        return dates[1] + "." + dates[2] + " " + times[0] + ":" + times[1];
     }
 
 }
